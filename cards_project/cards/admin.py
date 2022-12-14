@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Card, Operation
+from .models import Card, Operation, Purchase
 
 
 class OperationInline(admin.TabularInline):
@@ -10,6 +10,7 @@ class OperationInline(admin.TabularInline):
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
     list_display = (
+        'pk',
         'series',
         'number',
         'type',
@@ -19,3 +20,12 @@ class CardAdmin(admin.ModelAdmin):
     search_fields = ('type', 'validity_period', 'status')
     list_filter = ('type', 'validity_period', 'status')
     inlines = [OperationInline, ]
+
+@admin.register(Purchase)
+class PurchaseAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'date',
+        'price'
+    )
+    list_filter = ('date', )

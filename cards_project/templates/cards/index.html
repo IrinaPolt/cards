@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} Главная страница {% endblock %}
+{% block content %}
+<body>
+  <br>
+  <br>
+  {% if request.user.is_authenticated %}
+    <a class="link" href="{% url 'users:logout' %}"> Выйти </a>
+    <h1> Все карты </h1>
+    <br>
+    <br>
+    <a class="link" href="{% url 'cards:gift' %}"> Подарочные карты </a>
+    <a class="link" href="{% url 'cards:loyalty' %}"> Карты лояльности </a>
+    <a class="link" href="{% url 'cards:credit' %}"> Кредитные карты </a>
+    <a class="link" href="{% url 'cards:generate' %}"> Сгенерировать новые карты </a>
+    <style>
+      #search_form {
+        margin-top: 50px;
+        margin-left: 20px;
+        size: 30px;
+      }
+    </style>
+    <form id="search_form" action="{% url 'cards:search' %}" method="get">
+      <input name="q" type="text" placeholder="Найти карты">
+    </form>
+  {% else %}
+  <br> <br> <br>
+  <p> Приложение, позволяющее управлять вашим бизнесом </p> 
+  <p> Карты лояльности, подарочные карты, кредитные карты - все для удобства вас и ваших клиентов </p>
+  <br>
+  <br>
+  <a class="link" href="{% url 'users:login' %}"> Войти </a>
+  <a class="link" href="{% url 'users:signup' %}"> Зарегистрироваться </a>
+  {% endif %}
+</body>
+{% endblock %}

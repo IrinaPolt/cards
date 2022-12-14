@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} Главная страница {% endblock %}
+{% block content %}
+<body>
+  <br>
+<h1> Результаты поиска </h1>
+ 
+{% if object_list %}
+  <section class="card_container">
+    {% for card in object_list %}
+      <a class="card_many" href="{% url 'cards:card_edit' card.id %}">
+        <h3 class="card_title">{{ card.series }} {{ card.number }} </h3>
+        <h4 class="card_details"> {{ card.type}} <br> <br> {{ card.issue_date }} - {{ card.activity_end_date }}
+          <br> <br> {{ card.validity_period }} <br> <br> {{ card.status }} </h4>
+        </a>
+    {% endfor %}
+  </section>
+{% else %}
+<br>
+<p> Кажется, у вас нет карт данной категории </p>
+{% endif %}
+</body>
+{% endblock %}

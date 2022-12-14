@@ -1,6 +1,39 @@
 from django.db import models
 
 
+# константы для систематизации карт
+
+LOYALTY = 'карты лояльности'
+GIFT = 'подарочные карты'
+CREDIT = 'кредитные карты'
+
+TYPE_CHOICES = (
+    (LOYALTY, 'карта лояльности'),
+    (GIFT, 'подарочная карта'),
+    (CREDIT, 'кредитная карта')
+)
+
+ACTIVE = 'активирована'
+N_ACTIVE = 'не активирована'
+EXPIRED = 'просрочена'
+
+STATUS_CHOICES = (
+    (ACTIVE, 'active'),
+    (N_ACTIVE, 'not active'),
+    (EXPIRED, 'expired')
+)
+
+SHORT = '1 месяц'
+MIDDLE = '6 месяцев'
+LONG = '12 месяцев'
+
+PERIOD_CHOICES = (
+    (SHORT, '1 месяц'),
+    (MIDDLE, '6 месяцев'),
+    (LONG, '1 год')
+)
+
+
 class Purchase(models.Model):
     date = models.DateTimeField(
         verbose_name='Дата и время покупки'
@@ -15,37 +48,6 @@ class Purchase(models.Model):
 
 
 class Card(models.Model):
-    # константы для систематизации карт
-
-    LOYALTY = 'карта лояльности'
-    GIFT = 'подарочная карта'
-    CREDIT = 'кредитная карта'
-
-    TYPE_CHOCES = (
-        (LOYALTY, 'loyalty'),
-        (GIFT, 'gift'),
-        (CREDIT, 'credit')
-    )
-
-    ACTIVE = 'активирована'
-    N_ACTIVE = 'не активирована'
-    EXPIRED = 'просрочена'
-
-    STATUS_CHOICES = (
-        (ACTIVE, 'active'),
-        (N_ACTIVE, 'not active'),
-        (EXPIRED, 'expired')
-    )
-
-    SHORT = 'short period'
-    MIDDLE = 'middle period'
-    LONG = 'long period'
-
-    PERIOD_CHOICES = (
-        (SHORT, '3 месяца'),
-        (MIDDLE, '6 месяцев'),
-        (LONG, '12 месяцев')
-    )
 
     series = models.IntegerField(
         verbose_name='Серия карты'
@@ -56,7 +58,7 @@ class Card(models.Model):
     type = models.CharField(
         verbose_name='Тип карты',
         max_length=100,
-        choices=TYPE_CHOCES,
+        choices=TYPE_CHOICES,
         default=GIFT
     )
     issue_date = models.DateTimeField(
@@ -84,7 +86,9 @@ class Card(models.Model):
         blank=True
     )
     payout = models.IntegerField(
-        verbose_name='Сумма на карте'
+        verbose_name='Сумма на карте',
+        blank=True,
+        null=True,
     )
 
     class Meta:

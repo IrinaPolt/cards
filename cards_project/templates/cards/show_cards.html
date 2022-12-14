@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %} {{ type }} {% endblock %}
+{% block content %}
+<body>
+    <div class="area" >
+      <br>
+        <a class="link" href="{% url 'users:logout' %}"> Выйти </a>
+        <div class="top_container">
+            <h1 class="site_title"> {{ type }} </h1>
+        </div>
+                <br>
+
+        <style>
+          #search_form {
+            margin-top: 50px;
+            margin-left: 20px;
+            size: 30px;
+          }
+        </style>
+        <form id="search_form" action="{% url 'cards:search' %}" method="get">
+          <input name="q" type="text" placeholder="Найти карты">
+        </form>
+        {% if cards %}
+            <section class="card_container">
+                {% for card in cards %}
+                  <a class="card_many" href="{% url 'cards:card_edit' card.id %}">
+                    <h3 class="card_title">{{ card.series }} {{ card.number }} </h3>
+                    <h4 class="card_details"> {{ card.issue_date }} - {{ card.activity_end_date }}
+                      <br> {{ card.validity_period }} <br> {{ card.status }} </h4>
+                  </a>
+                {% endfor %}
+            </section>
+
+        {% else %}
+            <br>
+            <p> Кажется, у вас еще нет карт данной категории </p>
+        {% endif %}
+    </div>
+</body>
+{% endblock %}

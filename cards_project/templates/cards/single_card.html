@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %} Редактирование карты {% endblock %}
+{% block content %}
+<body>
+    <div class="card_form_wrapper">
+        <h1 class="card_form_name"> Редактировать карту </h1>
+        <br>
+        <form enctype="multipart/form-data" action="{% url 'cards:card_edit' card_id %}" method="post">
+            {% csrf_token %}
+            <div class="error_text">
+              {{ form.non_field_errors }}
+            </div>
+
+            <div class="card_series_wrapper">
+                {{ form.card_series.errors }}
+                <label class="card_series_label" for="{{ form.card_series.id_for_label }}"> Серия карты:  </label>
+                <br>
+                <br>
+                {{ form.series }}
+            </div>
+            <br>
+            <div class="card_type_wrapper">
+                {{ form.card_type.errors }}
+                <label class="card_type_label" for="{{ form.card_type.id_for_label }}"> Тип карты:  </label>
+                <br>
+                <br>
+                {{ form.type }}
+            </div>
+            <br>
+            <div class="card_validity_period_wrapper">
+                {{ form.card_validity_period.errors }}
+                <label class="card_validity_period_label" for="{{ form.validity_period.id_for_label }}"> Срок действия:  </label>
+                <br>
+                <br>
+                {{ form.validity_period }}
+            </div>
+            <br>
+            <div class="card_payout_wrapper">
+                {{ form.card_payout.errors }}
+                <label class="card_payout_label" for="{{ form.payout.id_for_label }}"> Баланс карты: </label>
+                <br>
+                <br>
+                {{ form.payout }}
+            </div>
+            <br>
+            <div class="card_status_wrapper">
+                {{ form.card_status.errors }}
+                <label class="card_status_label" for="{{ form.status.id_for_label }}"> Статус карты: </label>
+                <br>
+                <br>
+                {{ form.status }}
+            </div>
+        <br>
+        <input class="submit_button" type="submit" value="Обновить">
+        <a class="link" href="{% url 'cards:delete' card_id %}"> Удалить данные карты </a>
+        </form>
+    </div>
+    <div class="card_form_wrapper">
+        <h1 class="card_form_name"> Операции по карте </h1>
+        {% if operations %}
+          {% for operation in operations %}
+            <h4> Дата и время: {{ operation.purchase.date }} <br> Сумма транзакции: {{ operation.purchase.price }} </h4> <br>
+          {% endfor %}
+        {% else %}
+         <h3> по данной карте еще не было произведено операций </h3>
+        {% endif %}
+    </div>
+</body>
+{% endblock %}

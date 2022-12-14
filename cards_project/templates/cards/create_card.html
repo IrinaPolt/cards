@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %} Сгенерировать новые карты {% endblock %}
+{% block content %}
+<body>
+    <div class="card_form_wrapper">
+        <h1 class="card_form_name"> Создать карты </h1>
+        <br>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="error_text">
+              {{ form.non_field_errors }}
+            </div>
+
+            <div class="card_series_wrapper">
+                {{ form.series.errors }}
+                <label class="card_series_label" for="{{ form.card_series.id_for_label }}"> Серия карт(ы):  </label>
+                <br>
+                {{ form.series }}
+            </div>
+            <br>
+            <div class="card_type_wrapper">
+                {{ form.type.errors }}
+                <label class="card_type_label" for="{{ form.card_type.id_for_label }}"> Тип карт(ы):  </label>
+                <br>
+                {{ form.type }}
+            </div>
+            <br>
+            <div class="card_period_wrapper">
+                {{ form.period.errors }}
+                <label class="card_period_label" for="{{ form.card_period.id_for_label }}"> Срок действия:  </label>
+                <br>
+                {{ form.validity_period }}
+            </div>
+            <br>
+            <div class="card_payout_wrapper">
+                {{ form.payout.errors }}
+                <label class="card_payout_label" for="{{ form.card_payout.id_for_label }}"> Баланс карт(ы): (не обязательно) </label>
+                <br>
+                {{ form.payout }}
+            </div>
+            <br>
+            <div class="amount_wrapper">
+                <div class="error_text">
+                    {{ form.amount.errors }}
+                </div>
+
+                <label  class="amount_label" for="{{ form.amount.id_for_label }}"> Количество карт:  </label>
+                {{ form.amount }}
+            </div>
+        <br>
+        <input class="submit_button" type="submit" value="Создать карты">
+        </form>
+    </div>
+</body>
+{% endblock %}
