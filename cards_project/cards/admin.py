@@ -21,6 +21,7 @@ class CardAdmin(admin.ModelAdmin):
     list_filter = ('type', 'validity_period', 'status')
     inlines = [OperationInline, ]
 
+
 @admin.register(Purchase)
 class PurchaseAdmin(admin.ModelAdmin):
     list_display = (

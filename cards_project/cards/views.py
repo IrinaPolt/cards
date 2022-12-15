@@ -1,14 +1,16 @@
+import datetime
 import random
 import string
-import datetime
-from django.db.models import Q
-from django.views.generic import ListView, TemplateView
-from django.shortcuts import render, get_object_or_404, redirect
+
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from .models import Card, Operation, ACTIVE, GIFT, LOYALTY, CREDIT
+from django.views.generic import ListView, TemplateView
+
 from .forms import CardForm
+from .models import ACTIVE, CREDIT, GIFT, LOYALTY, Card, Operation
 
 
 def count_end_date(date, period):
@@ -39,13 +41,17 @@ def card_edit(request, card_id):
         new_validity_period = form.data['validity_period']
         form.save()
         if new_status == 'просрочена' and old_status != new_status:
-            card.activity_end_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            card.activity_end_date = datetime.datetime.now().strftime(
+                "%Y-%m-%d %H:%M")
         if new_validity_period != old_validity_period:
-            card.activity_end_date=count_end_date(card.issue_date, new_validity_period)
+            card.activity_end_date = count_end_date(
+                card.issue_date, new_validity_period)
         card.save()
         return redirect('cards:index')
-    return render(request, 'cards/single_card.html',
-                          {'form': form, 'card_id': card_id, 'operations': operations})
+    return render(
+        request,
+        'cards/single_card.html',
+        {'form': form, 'card_id': card_id, 'operations': operations})
 
 
 @login_required
@@ -90,7 +96,7 @@ def show_credit(request):
 
 @login_required
 def create_cards(request):
-    N = 6 # amount of digits in a card number
+    N = 6  # amount of digits in a card number
     print(request)
     if request.method == 'POST':
         form = CardForm(request.POST)
@@ -102,9 +108,11 @@ def create_cards(request):
                     series=form.data['series'],
                     number=''.join(random.choices(string.digits, k=N)),
                     type=form.data['type'],
-                    issue_date=datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                    issue_date=datetime.datetime.now().strftime(
+                        "%Y-%m-%d %H:%M"),
                     validity_period=form.data['validity_period'],
-                    activity_end_date=count_end_date(datetime.datetime.now(), form.data['validity_period']),
+                    activity_end_date=count_end_date(
+                        datetime.datetime.now(), form.data['validity_period']),
                     status=ACTIVE,
                     payout=form.data['payout'],
                 )

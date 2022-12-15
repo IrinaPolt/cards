@@ -1,5 +1,6 @@
-from django.db import models
+import datetime
 
+from django.db import models
 
 # константы для систематизации карт
 
@@ -43,8 +44,8 @@ class Purchase(models.Model):
     )
 
     class Meta:
-        verbose_name='Покупка'
-        verbose_name_plural='Покупки'
+        verbose_name = 'Покупка'
+        verbose_name_plural = 'Покупки'
 
 
 class Card(models.Model):
@@ -92,11 +93,19 @@ class Card(models.Model):
     )
 
     class Meta:
-        verbose_name='Карта'
-        verbose_name_plural='Карты'
-    
+        verbose_name = 'Карта'
+        verbose_name_plural = 'Карты'
+
     def __str__(self):
         return f'Карта {self.series} {self.number}'
+
+    def check_status(self):
+        now = datetime.datetime.now()
+        if now > self.activity_end_date and self.status == ACTIVE:
+            self.status = N_ACTIVE
+            self.save()
+            return N_ACTIVE
+        return ACTIVE
 
 
 class Operation(models.Model):
@@ -112,5 +121,5 @@ class Operation(models.Model):
     )
 
     class Meta:
-        verbose_name='Операция по карте'
-        verbose_name_plural='Операции по карте'
+        verbose_name = 'Операция по карте'
+        verbose_name_plural = 'Операции по карте'

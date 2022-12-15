@@ -1,6 +1,7 @@
 from django import forms
 
-from .models import Card, STATUS_CHOICES
+from .models import STATUS_CHOICES, Card
+
 
 class CardForm(forms.ModelForm):
     payout = forms.IntegerField(initial=0)
