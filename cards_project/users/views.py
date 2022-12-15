@@ -9,5 +9,5 @@ User = get_user_model()
 
 class SignUp(CreateView):
     form_class = CreationForm
-    success_url = reverse_lazy('quizzes:index')
+    success_url = reverse_lazy('cards:index')
     template_name = 'users/signup.html'

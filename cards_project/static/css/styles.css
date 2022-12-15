@@ -12,7 +12,18 @@ body {
       padding-left: 50px;
   }
 
-
+  .user_title {
+    color: rgb(125, 43, 180);
+    font-family: Roboto;
+    font-size: 40px;
+    text-align: center;
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-top: 5px;
+    border-radius: 30px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
   .card-header {
     font-family: Roboto;
     font-size: 30pt;
@@ -28,7 +39,7 @@ body {
   .card-body-signup {
     font-family: Roboto;
     font-size: 15pt;
-    color: #bba7c3;
+    color: #9435b9;
     margin-left: 350px;
     margin-right: 400px;
   }
